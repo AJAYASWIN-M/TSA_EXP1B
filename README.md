@@ -71,5 +71,5 @@ plt.show()
 
 
 ### RESULT:
-Thus we have created the python code for the conversion of non stationary to stationary data on Petrol Prices in Top cities
+Thus the python code for the conversion of non stationary to stationary data on Petrol Prices in Top cities
 data.
