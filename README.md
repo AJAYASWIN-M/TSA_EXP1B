@@ -1,8 +1,8 @@
 ## DEVELOPED BY : AJAY ASWIN M
 ## REGISTER NUMBER : 212222240005
-
+## Date:
 # Ex.No: 1B                     CONVERSION OF NON STATIONARY TO STATIONARY DATA
-# Date: 
+ 
 
 ### AIM:
 To perform regular differncing,seasonal adjustment and log transformatio on Petrol Price in top cities
