@@ -16,47 +16,52 @@ To perform regular differncing,seasonal adjustment and log transformatio on Petr
 ```python
 import pandas as pd
 import numpy as np
-
-file_path = '/content/petrol.csv'
-df = pd.read_csv(file_path)
-
-print(df.head())
-
-df['Date'] = pd.to_datetime(df['Date'])
-df.set_index('Date', inplace=True)
-
-df['Log_Value'] = np.log(df['Chennai'])
-
-df['Differenced_Value'] = df['Chennai'].diff()
-
-seasonal_period = 12
-df['Seasonally_Adjusted_Value'] = df['Chennai'].diff(seasonal_period)
-
 import matplotlib.pyplot as plt
 
-# Plot the original data
+file_path = 'petrol.csv'
+df = pd.read_csv(file_path)
+
+# Convert Date column to datetime
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Create a copy of the DataFrame before setting index
+df_indexed = df.copy()
+df_indexed.set_index('Date', inplace=True)
+
+# Log transformation
+df_indexed['Log_Value'] = np.log(df_indexed['Chennai'])
+
+# Differencing
+df_indexed['Differenced_Value'] = df_indexed['Chennai'].diff()
+
+# Seasonal differencing
+seasonal_period = 12
+df_indexed['Seasonally_Adjusted_Value'] = df_indexed['Chennai'].diff(seasonal_period)
+
+# Plotting
 plt.figure(figsize=(14, 10))
 
+# Plot the original data
 plt.subplot(4, 1, 1)
-plt.plot(df['Value'], label='Original')
+plt.plot(df['Date'], df['Chennai'], label='Original')
 plt.title('Original Time Series')
 plt.legend(loc='best')
 
 # Plot the log-transformed data
 plt.subplot(4, 1, 2)
-plt.plot(df['Log_Value'], label='Log Transformed', color='orange')
+plt.plot(df_indexed.index, df_indexed['Log_Value'], label='Log Transformed', color='orange')
 plt.title('Log Transformed Time Series')
 plt.legend(loc='best')
 
 # Plot the regular differenced data
 plt.subplot(4, 1, 3)
-plt.plot(df['Differenced_Value'], label='Differenced', color='green')
+plt.plot(df_indexed.index, df_indexed['Differenced_Value'], label='Differenced', color='green')
 plt.title('Regular Differenced Time Series')
 plt.legend(loc='best')
 
 # Plot the seasonally adjusted data
 plt.subplot(4, 1, 4)
-plt.plot(df['Seasonally_Adjusted_Value'], label='Seasonally Adjusted', color='red')
+plt.plot(df_indexed.index, df_indexed['Seasonally_Adjusted_Value'], label='Seasonally Adjusted', color='red')
 plt.title('Seasonally Adjusted Time Series')
 plt.legend(loc='best')
 
